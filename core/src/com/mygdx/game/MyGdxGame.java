@@ -19,6 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MyGdxGame extends ApplicationAdapter {
+    private static final int SW = 1136;
+    private static final int SH = 640;
     private String TAG = "MyGdxGame";
     private Stage stage;
     private Slider slider;
@@ -26,14 +28,15 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void create() {
-        stage = new Stage(new FitViewport(1136, 640));
+        stage = new Stage(new FitViewport(SW, SH));
 
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
         Texture lad = new Texture(Gdx.files.internal("solo/lab.jpg"));
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.jpg"));
         Texture right = new Texture(Gdx.files.internal("solo/right.png"));
         final Texture left = new Texture(Gdx.files.internal("solo/left.png"));
-
+        Gdx.app.log(TAG, "screen width" + Gdx.graphics.getWidth());
+        Gdx.app.log(TAG, "screen Height" + Gdx.graphics.getHeight());
         Image bgimg = new Image(solobg);
         final Image leftImg = new Image(left);
         stage.addActor(bgimg);
@@ -97,10 +100,10 @@ public class MyGdxGame extends ApplicationAdapter {
         Texture knob = new Texture(Gdx.files.internal("solo/slider_knob.png"));
         sliderStyle.background = new TextureRegionDrawable(new TextureRegion(background));
         sliderStyle.knob = new TextureRegionDrawable(new TextureRegion(knob));
-        slider = new Slider(0, scrollWidth - 1136 + left.getWidth(), 1, false, sliderStyle);
-        scroll.getMaxX();
+        int max = scrollWidth - SW + left.getWidth();
+        slider = new Slider(0, max, 1, false, sliderStyle);
         slider.setWidth(background.getWidth());
-        slider.setPosition(1136 / 2 - background.getWidth() / 2, 0);
+        slider.setPosition(SW / 2 - background.getWidth() / 2, 0);
         slider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -108,6 +111,7 @@ public class MyGdxGame extends ApplicationAdapter {
                 scroll.setScrollX(slider.getValue());
             }
         });
+        slider.setValue(max);
         //添加slider
         stage.addActor(slider);
     }
