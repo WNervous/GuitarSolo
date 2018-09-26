@@ -24,7 +24,10 @@ public class MyGdxGame extends ApplicationAdapter {
     private String TAG = "MyGdxGame";
     private Stage stage;
     private Slider slider;
+    private Image leftImg;
+    private float sliderValue;
     private int scrollWidth;
+    private int singleHeight = SH / 7;
 
     @Override
     public void create() {
@@ -38,7 +41,7 @@ public class MyGdxGame extends ApplicationAdapter {
         Gdx.app.log(TAG, "screen width" + Gdx.graphics.getWidth());
         Gdx.app.log(TAG, "screen Height" + Gdx.graphics.getHeight());
         Image bgimg = new Image(solobg);
-        final Image leftImg = new Image(left);
+        leftImg = new Image(left);
         stage.addActor(bgimg);
         Table container = new Table();
         stage.addActor(container);
@@ -76,7 +79,6 @@ public class MyGdxGame extends ApplicationAdapter {
                     image = new Image(pattern);
             }
             scrollWidth += image.getWidth();
-            Gdx.app.log(TAG, "EACH IMG" + image.getWidth());
             table.add(image);
         }
         Gdx.app.log(TAG, "TOTAL WIDTH;" + scrollWidth);
@@ -107,13 +109,26 @@ public class MyGdxGame extends ApplicationAdapter {
         slider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.log(TAG, "slider:" + slider.getValue());
+                sliderValue = slider.getValue();
                 scroll.setScrollX(slider.getValue());
             }
         });
-        slider.setValue(max);
+//        slider.setValue(max);
         //添加slider
         stage.addActor(slider);
+
+        container.addListener(new InputListener() {
+
+            @Override
+            public void touchDragged(InputEvent event, float x, float y, int pointer) {
+                judgePinAndXian(x, y, pointer);
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
     }
 
     @Override
@@ -128,5 +143,35 @@ public class MyGdxGame extends ApplicationAdapter {
     public void dispose() {
         stage.dispose();
         scrollWidth = 0;
+    }
+
+    private void judgePinAndXian(float x, float y, int pointer) {
+        //1.判断 左侧区域 ：
+        if (x <= leftImg.getWidth()) {
+            int chords = chords(y / singleHeight);
+            Gdx.app.log(TAG, "CHORDS:" + chords);
+        }
+    }
+
+    private int chords(float v) {
+        if (0 < v && v < 1) {
+            return 1;
+        }
+        if (1 < v && v < 2) {
+            return 2;
+        }
+        if (2 < v && v < 3) {
+            return 3;
+        }
+        if (3 < v && v < 4) {
+            return 4;
+        }
+        if (4 < v && v < 5) {
+            return 5;
+        }
+        if (5 < v && v < 6) {
+            return 6;
+        }
+        return 1;
     }
 }
