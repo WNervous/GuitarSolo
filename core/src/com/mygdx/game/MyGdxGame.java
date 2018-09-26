@@ -37,12 +37,10 @@ public class MyGdxGame extends ApplicationAdapter {
         Image bgimg = new Image(solobg);
         final Image leftImg = new Image(left);
         stage.addActor(bgimg);
-        stage.addActor(leftImg);
-
         Table container = new Table();
         stage.addActor(container);
         container.setFillParent(true);
-        container.setPosition(left.getWidth(), 0);
+        container.add(leftImg).width(leftImg.getWidth());
         Gdx.input.setInputProcessor(stage);
 
         final Table table = new Table();
@@ -94,7 +92,7 @@ public class MyGdxGame extends ApplicationAdapter {
         container.add(scroll).fill().expand();
 
         //slider  设置
-        Slider.SliderStyle sliderStyle = new Slider.SliderStyle();
+        final Slider.SliderStyle sliderStyle = new Slider.SliderStyle();
         Texture background = new Texture(Gdx.files.internal("solo/slider_bg.png"));
         Texture knob = new Texture(Gdx.files.internal("solo/slider_knob.png"));
         sliderStyle.background = new TextureRegionDrawable(new TextureRegion(background));
@@ -107,7 +105,7 @@ public class MyGdxGame extends ApplicationAdapter {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.log(TAG, "slider:" + slider.getValue());
-                scroll.scrollTo(slider.getValue(),0,1136,640);
+                scroll.setScrollX(slider.getValue());
             }
         });
         //添加slider
