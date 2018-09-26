@@ -19,8 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MyGdxGame extends ApplicationAdapter {
-    private static final int SW = 1136;
-    private static final int SH = 640;
+    public static final int SW = 1136;
+    public static final int SH = 640;
     private String TAG = "MyGdxGame";
     private Stage stage;
     private Slider slider;
@@ -32,10 +32,9 @@ public class MyGdxGame extends ApplicationAdapter {
     @Override
     public void create() {
         stage = new Stage(new FitViewport(SW, SH));
-
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
-        Texture lad = new Texture(Gdx.files.internal("solo/lab.jpg"));
-        Texture pattern = new Texture(Gdx.files.internal("solo/pattern.jpg"));
+        Texture lad = new Texture(Gdx.files.internal("solo/lab.png"));
+        Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
         Texture right = new Texture(Gdx.files.internal("solo/right.png"));
         final Texture left = new Texture(Gdx.files.internal("solo/left.png"));
         Gdx.app.log(TAG, "screen width" + Gdx.graphics.getWidth());
@@ -146,30 +145,40 @@ public class MyGdxGame extends ApplicationAdapter {
     }
 
     private void judgePinAndXian(float x, float y, int pointer) {
-        //1.判断 左侧区域 ：
-        if (x <= leftImg.getWidth()) {
-            int chords = chords(y / singleHeight);
-            Gdx.app.log(TAG, "CHORDS:" + chords);
+        int chords = chords(y / singleHeight);
+//        Gdx.app.log(TAG, "CHORDS:" + chords);
+        float leftWidth = leftImg.getWidth();
+
+        //1.判断 左侧区域 ：两种情况  ： 1） 该弦上没有手指按下 2） 有手指按下
+        if (x <= leftWidth) {
+            int pin = 0;
+        } else {
+            float v = x + sliderValue - leftWidth;
+            int v1 = (int) Math.ceil(v / 130);
+            Gdx.app.log(TAG, "v1:" + v1);
         }
     }
 
     private int chords(float v) {
-        if (0 < v && v < 1) {
+        if (0 <= v && v < 1.5) {
             return 1;
         }
-        if (1 < v && v < 2) {
+        if (1.5 < v && v < 2.5) {
             return 2;
         }
-        if (2 < v && v < 3) {
+        if (2.5 < v && v < 3.5) {
             return 3;
         }
-        if (3 < v && v < 4) {
+        if (3.5 < v && v < 4.5) {
             return 4;
         }
-        if (4 < v && v < 5) {
+        if (4.5 < v && v < 5.5) {
             return 5;
         }
-        if (5 < v && v < 6) {
+        if (5.5 < v && v < 6.5) {
+            return 6;
+        }
+        if (v >= 6.5) {
             return 6;
         }
         return 1;
