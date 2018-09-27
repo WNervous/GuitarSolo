@@ -1,0 +1,173 @@
+atlas.png
+size: 1024, 512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a
+  rotate: false
+  xy: 2, 204
+  size: 176, 176
+  orig: 176, 176
+  offset: 0, 0
+  index: -1
+b
+  rotate: false
+  xy: 180, 204
+  size: 176, 176
+  orig: 176, 176
+  offset: 0, 0
+  index: -1
+btn_close
+  rotate: false
+  xy: 378, 403
+  size: 38, 39
+  orig: 38, 39
+  offset: 0, 0
+  index: -1
+btn_play
+  rotate: false
+  xy: 2, 382
+  size: 92, 92
+  orig: 92, 92
+  offset: 0, 0
+  index: -1
+btn_play_press
+  rotate: false
+  xy: 96, 382
+  size: 92, 92
+  orig: 92, 92
+  offset: 0, 0
+  index: -1
+btn_setting
+  rotate: false
+  xy: 190, 382
+  size: 92, 92
+  orig: 92, 92
+  offset: 0, 0
+  index: -1
+btn_setting_press
+  rotate: false
+  xy: 284, 382
+  size: 92, 92
+  orig: 92, 92
+  offset: 0, 0
+  index: -1
+c
+  rotate: false
+  xy: 204, 2
+  size: 176, 176
+  orig: 176, 176
+  offset: 0, 0
+  index: -1
+d
+  rotate: false
+  xy: 358, 180
+  size: 176, 176
+  orig: 176, 176
+  offset: 0, 0
+  index: -1
+e
+  rotate: false
+  xy: 536, 140
+  size: 176, 176
+  orig: 176, 176
+  offset: 0, 0
+  index: -1
+f
+  rotate: false
+  xy: 605, 318
+  size: 176, 176
+  orig: 176, 176
+  offset: 0, 0
+  index: -1
+g
+  rotate: false
+  xy: 714, 140
+  size: 176, 176
+  orig: 176, 176
+  offset: 0, 0
+  index: -1
+gradient
+  rotate: false
+  xy: 38, 505
+  size: 592, 1
+  orig: 592, 1
+  offset: 0, 0
+  index: -1
+gradient_back
+  rotate: false
+  xy: 42, 501
+  size: 185, 1
+  orig: 185, 1
+  offset: 0, 0
+  index: -1
+icons
+  rotate: false
+  xy: 2, 476
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+inputch_body
+  rotate: false
+  xy: 38, 487
+  size: 9, 5
+  orig: 9, 5
+  offset: 0, 0
+  index: -1
+inputch_button
+  rotate: false
+  xy: 38, 476
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+inputch_head
+  rotate: false
+  xy: 38, 494
+  size: 9, 5
+  orig: 9, 5
+  offset: 0, 0
+  index: -1
+krug
+  rotate: false
+  xy: 2, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+line
+  rotate: false
+  xy: 38, 501
+  size: 2, 2
+  orig: 2, 2
+  offset: 0, 0
+  index: -1
+solo_scroll
+  rotate: false
+  xy: 378, 358
+  size: 225, 43
+  orig: 225, 43
+  offset: 0, 0
+  index: -1
+solo_scroll_bg
+  rotate: false
+  xy: 536, 2
+  size: 486, 44
+  orig: 486, 44
+  offset: 0, 0
+  index: -1
+solo_scroll_bg_distortion
+  rotate: false
+  xy: 536, 94
+  size: 484, 44
+  orig: 484, 44
+  offset: 0, 0
+  index: -1
+solo_scroll_bg_electro
+  rotate: false
+  xy: 536, 48
+  size: 486, 44
+  orig: 486, 44
+  offset: 0, 0
+  index: -1

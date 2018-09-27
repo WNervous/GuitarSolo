@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MyGdxGame extends ApplicationAdapter {
     public static final int SW = 1136;
@@ -33,11 +34,15 @@ public class MyGdxGame extends ApplicationAdapter {
     private int singleWidth;
     private Image circleImg;
 
+    private ActionSample actionSample;
+
     private ArrayList<StringRect> stringRects = new ArrayList<>();
+    private HashMap<Integer, Integer> stringMap = new HashMap<>();
 
     @Override
     public void create() {
         stage = new Stage(new FitViewport(SW, SH));
+        actionSample = new ActionSample();
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
         Texture lad = new Texture(Gdx.files.internal("solo/lab.png"));
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
@@ -129,7 +134,7 @@ public class MyGdxGame extends ApplicationAdapter {
 //        slider.setValue(max);
         //添加slider
         stage.addActor(slider);
-
+        stage.addActor(actionSample);
         container.addListener(new InputListener() {
 
             @Override
@@ -199,25 +204,42 @@ public class MyGdxGame extends ApplicationAdapter {
                     actor.setMoveBefore(true, pointer);
                     int string = actor.getString();
                     int pin = actor.getPin();
+                    if (pin == 0) {
+                        for (Integer string1 : stringMap.keySet()) {
+                            if (string == string1) {
+                                Integer pin1 = stringMap.get(string1);
+                                if (pin1 > 0) {
+                                    pin = pin1;
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        if (stringMap.containsKey(string)) {
+                            stringMap.put(string, Math.max(pin, stringMap.get(string)));
+                        } else {
+                            stringMap.put(string, pin);
+                        }
+                        Gdx.app.log(TAG, "put");
+                    }
                     Gdx.app.log(TAG, "String : " + string + "  pin : " + pin);
                 }
-            } else {
+            } else if (touchUp && actor.getGuitarRect().isContainer(x, y)) {
                 actor.setMoveBefore(false, pointer);
+                if (actor.getPin() == 0) {
+                    return;
+                }
+                if (stringMap.containsKey(actor.getString())) {
+                    stringMap.remove(actor.getString());
+                    Gdx.app.log(TAG, "REMOVE");
+                }
+            } else if (touchUp && !actor.getGuitarRect().isContainer(x, y)) {
+                actor.setMoveBefore(false, pointer);
+                if (stringMap.containsKey(actor.getString())) {
+                    stringMap.remove(actor.getString());
+                    Gdx.app.log(TAG, "REMOVE");
+                }
             }
         }
-
-
-//        int chords = chords(y / singleHeight);
-//        int pin;
-//        float leftWidth = leftImg.getWidth();
-//
-//        //1.判断 左侧区域 ：两种情况  ： 1） 该弦上没有手指按下 2） 有手指按下
-//        if (x <= leftWidth) {
-//            pin = 0;
-//        } else {
-//            float v = x + sliderValue - leftWidth;
-//            pin = (int) Math.ceil(v / 130);
-//        }
-//        Gdx.app.log(TAG, "string and pin :" + chords + "____" + pin);
     }
 }
