@@ -34,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private int singleWidth;
     private Image circleImg;
 
-    private ActionSample actionSample;
+    private CircleGroup circleGroup;
 
     private ArrayList<StringRect> stringRects = new ArrayList<>();
     private HashMap<Integer, Integer> stringMap = new HashMap<>();
@@ -42,7 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
     @Override
     public void create() {
         stage = new Stage(new FitViewport(SW, SH));
-        actionSample = new ActionSample();
+        circleGroup = new CircleGroup();
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
         Texture lad = new Texture(Gdx.files.internal("solo/lab.png"));
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
@@ -134,7 +134,7 @@ public class MyGdxGame extends ApplicationAdapter {
 //        slider.setValue(max);
         //添加slider
         stage.addActor(slider);
-        stage.addActor(actionSample);
+        stage.addActor(circleGroup);
         container.addListener(new InputListener() {
 
             @Override
@@ -197,7 +197,9 @@ public class MyGdxGame extends ApplicationAdapter {
     }
 
     private void judgePinAndXian(float x, float y, boolean touchUp, int pointer) {
-        x = x + sliderValue;
+        if (x > leftImg.getWidth()) {
+            x = x + sliderValue;
+        }
         for (StringRect actor : stringRects) {
             if (!touchUp && actor.getGuitarRect().isContainer(x, y)) {
                 if (!actor.isMoveBefore(pointer)) {

@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -12,13 +13,20 @@ import com.badlogic.gdx.utils.Array;
 /**
  * @author airsaid
  */
-public class ActionSample extends Group {
+public class CircleGroup extends Group {
 
     private TextureAtlas textureAtlas;
     private Array<Image> mImages = new Array<>();
+    private Texture circleTexture;
 
-    public ActionSample() {
+    public CircleGroup() {
         textureAtlas = new TextureAtlas("atlas.pack");
+        startAnimator();
+    }
+
+    public CircleGroup(Texture texture) {
+        textureAtlas = new TextureAtlas("atlas.pack");
+        circleTexture = texture;
         startAnimator();
     }
 
@@ -38,7 +46,12 @@ public class ActionSample extends Group {
     private void initActors() {
         clearActor();
         for (int i = 0; i < 4; i++) {
-            Image image = new Image(textureAtlas.findRegion("c"));
+            Image image;
+            if (circleTexture != null) {
+                image = new Image(circleTexture);
+            } else {
+                image = new Image(textureAtlas.findRegion("c"));
+            }
             image.setPosition(Gdx.graphics.getWidth() / 2 - image.getWidth() / 2, Gdx.graphics.getHeight() / 2 - image.getHeight() / 2);
             image.setOrigin(Align.center);
             image.setScale(0f);
