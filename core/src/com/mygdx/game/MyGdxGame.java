@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import java.util.ArrayList;
+
 public class MyGdxGame extends ApplicationAdapter {
     public static final int SW = 1136;
     public static final int SH = 640;
@@ -28,7 +30,10 @@ public class MyGdxGame extends ApplicationAdapter {
     private float sliderValue;
     private int scrollWidth;
     private int singleHeight = SH / 7;
+    private int singleWidth;
     private Image circleImg;
+
+    private ArrayList<StringRect> stringRects = new ArrayList<>();
 
     @Override
     public void create() {
@@ -101,17 +106,6 @@ public class MyGdxGame extends ApplicationAdapter {
             table.add(image);
         }
         Gdx.app.log(TAG, "TOTAL WIDTH;" + scrollWidth);
-        scroll.addListener(new InputListener() {
-            @Override
-            public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                Gdx.app.log("scrollpane", "touch: " + x + "___" + y);
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
         new Group().addActor(scroll);
         container.add(scroll).fill().expand();
 
@@ -140,15 +134,47 @@ public class MyGdxGame extends ApplicationAdapter {
 
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                judgePinAndXian(x, y, pointer);
+                judgePinAndXian(x, y, false, pointer);
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                judgePinAndXian(x, y, pointer);
+                judgePinAndXian(x, y, false, pointer);
                 return true;
             }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                judgePinAndXian(x, y, true, pointer);
+            }
         });
+        initStringRect();
+    }
+
+    private void initStringRect() {
+        for (int pin = 0; pin < 13; pin++) {
+            for (int string = 1; string < 7; string++) {
+                StringRect stringRect = new StringRect();
+                if (pin == 0) {
+                    stringRect.setPin(pin);
+                    stringRect.setString(string);
+                    StringRect.GuitarRect guitarRect = stringRect.getGuitarRect();
+                    guitarRect.left = 0;
+                    guitarRect.right = 225;
+                    guitarRect.top = singleHeight * string + singleHeight / 2;
+                    guitarRect.bottom = singleHeight * string - singleHeight / 2;
+                } else {
+                    stringRect.setPin(13 - pin);
+                    stringRect.setString(string);
+                    StringRect.GuitarRect guitarRect = stringRect.getGuitarRect();
+                    guitarRect.left = (pin - 1) * 130 + 225;
+                    guitarRect.right = guitarRect.left + 130;
+                    guitarRect.top = singleHeight * string + singleHeight / 2;
+                    guitarRect.bottom = singleHeight * string - singleHeight / 2;
+                }
+                stringRects.add(stringRect);
+            }
+        }
     }
 
     @Override
@@ -165,44 +191,33 @@ public class MyGdxGame extends ApplicationAdapter {
         scrollWidth = 0;
     }
 
-    private void judgePinAndXian(float x, float y, int pointer) {
-        int chords = chords(y / singleHeight);
-        int pin = 13;
-//        Gdx.app.log(TAG, "CHORDS:" + chords);
-        float leftWidth = leftImg.getWidth();
+    private void judgePinAndXian(float x, float y, boolean touchUp, int pointer) {
+        x = x + sliderValue;
+        for (StringRect actor : stringRects) {
+            if (!touchUp && actor.getGuitarRect().isContainer(x, y)) {
+                if (!actor.isMoveBefore(pointer)) {
+                    actor.setMoveBefore(true, pointer);
+                    int string = actor.getString();
+                    int pin = actor.getPin();
+                    Gdx.app.log(TAG, "String : " + string + "  pin : " + pin);
+                }
+            } else {
+                actor.setMoveBefore(false, pointer);
+            }
+        }
 
-        //1.判断 左侧区域 ：两种情况  ： 1） 该弦上没有手指按下 2） 有手指按下
-        if (x <= leftWidth) {
-            pin = 13;
-        } else {
-            float v = x + sliderValue - leftWidth;
-            pin = (int) Math.ceil(v / 130);
-        }
-        Gdx.app.log(TAG, "string and pin :" + chords + "____" + pin);
-    }
 
-    private int chords(float v) {
-        if (0 <= v && v < 1.5) {
-            return 1;
-        }
-        if (1.5 < v && v < 2.5) {
-            return 2;
-        }
-        if (2.5 < v && v < 3.5) {
-            return 3;
-        }
-        if (3.5 < v && v < 4.5) {
-            return 4;
-        }
-        if (4.5 < v && v < 5.5) {
-            return 5;
-        }
-        if (5.5 < v && v < 6.5) {
-            return 6;
-        }
-        if (v >= 6.5) {
-            return 6;
-        }
-        return 1;
+//        int chords = chords(y / singleHeight);
+//        int pin;
+//        float leftWidth = leftImg.getWidth();
+//
+//        //1.判断 左侧区域 ：两种情况  ： 1） 该弦上没有手指按下 2） 有手指按下
+//        if (x <= leftWidth) {
+//            pin = 0;
+//        } else {
+//            float v = x + sliderValue - leftWidth;
+//            pin = (int) Math.ceil(v / 130);
+//        }
+//        Gdx.app.log(TAG, "string and pin :" + chords + "____" + pin);
     }
 }

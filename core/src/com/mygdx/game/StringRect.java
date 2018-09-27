@@ -1,16 +1,14 @@
-package play.to.how.sketch.lessons.guitar.meevii.com.easyguitarnew.solo;
+package com.mygdx.game;
 
 import java.util.HashMap;
 
 
-/**
- * Created by JiaWeichen on 2018/6/8.
- */
-
 public class StringRect {
+
+    private int pin;
     private int string;
-    private GuitarRect guitarRect;
-    private HashMap<Integer, Boolean> pointerHolder = new HashMap<Integer, Boolean>();
+    private GuitarRect guitarRect = new GuitarRect();
+    private HashMap<Integer, Boolean> pointerHolder = new HashMap<>();
 
     public boolean isMoveBefore(int pointIndex) {
         if (pointerHolder.containsKey(pointIndex)) {
@@ -39,6 +37,21 @@ public class StringRect {
         this.string = string;
     }
 
+    public int getPin() {
+        return pin;
+    }
+
+    public void setPin(int pin) {
+        this.pin = pin;
+    }
+
+    public HashMap<Integer, Boolean> getPointerHolder() {
+        return pointerHolder;
+    }
+
+    public void setPointerHolder(HashMap<Integer, Boolean> pointerHolder) {
+        this.pointerHolder = pointerHolder;
+    }
 
     public static class GuitarRect {
         public float left;

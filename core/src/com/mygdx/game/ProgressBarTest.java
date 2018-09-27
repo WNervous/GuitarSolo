@@ -53,12 +53,12 @@ public class ProgressBarTest extends ApplicationAdapter {
 
         stage.addActor(circleImg);
         ScaleToAction scaleToAction8 = Actions.scaleTo(0.8f, 0.8f, 0.01F);
-        ScaleToAction scaleToAction10 = Actions.scaleTo(1f, 1f, 0.04F);
-        ScaleToAction scaleToAction6 = Actions.scaleTo(0.6f, 0.6f, 0.04F);
-        ScaleToAction scaleToAction4 = Actions.scaleTo(0.4f, 0.4f, 0.05F);
-        ScaleToAction scaleToAction3 = Actions.scaleTo(0.3f, 0.3f, 0.05F);
-        ScaleToAction scaleToAction2 = Actions.scaleTo(0.2f, 0.2f, 0.05F);
-        ScaleToAction scaleToAction1 = Actions.scaleTo(0.1f, 0.1f, 0.05F);
+        ScaleToAction scaleToAction10 = Actions.scaleTo(1f, 1f, 0.01F);
+        ScaleToAction scaleToAction6 = Actions.scaleTo(0.6f, 0.6f, 0.01F);
+        ScaleToAction scaleToAction4 = Actions.scaleTo(0.4f, 0.4f, 0.01F);
+        ScaleToAction scaleToAction3 = Actions.scaleTo(0.3f, 0.3f, 0.01F);
+        ScaleToAction scaleToAction2 = Actions.scaleTo(0.2f, 0.2f, 0.01F);
+        ScaleToAction scaleToAction1 = Actions.scaleTo(0.1f, 0.1f, 0.01F);
         ScaleToAction scaleToAction0 = Actions.scaleTo(0f, 0f);
 
         SequenceAction sequence = Actions.sequence(
