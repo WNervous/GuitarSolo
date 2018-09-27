@@ -28,6 +28,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private float sliderValue;
     private int scrollWidth;
     private int singleHeight = SH / 7;
+    private Image circleImg;
 
     @Override
     public void create() {
@@ -37,30 +38,38 @@ public class MyGdxGame extends ApplicationAdapter {
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
         Texture right = new Texture(Gdx.files.internal("solo/right.png"));
         final Texture left = new Texture(Gdx.files.internal("solo/left.png"));
-        Gdx.app.log(TAG, "screen width" + Gdx.graphics.getWidth());
-        Gdx.app.log(TAG, "screen Height" + Gdx.graphics.getHeight());
+
+        // circle
+        Texture cicleTexture = new Texture(Gdx.files.internal("solo/ic_oval.png"));
+        circleImg = new Image(cicleTexture);
+        circleImg.setSize(100, 100);
+
         Image bgimg = new Image(solobg);
         leftImg = new Image(left);
         stage.addActor(bgimg);
         Table container = new Table();
         stage.addActor(container);
         container.setFillParent(true);
+        container.setDebug(true);
         container.add(leftImg).width(leftImg.getWidth());
         Gdx.input.setInputProcessor(stage);
 
         final Table table = new Table();
+        table.setDebug(true);
         final ScrollPane scroll = new ScrollPane(table);
         scroll.setFlickScroll(false);
         scroll.setScrollingDisabled(false, true);
         table.defaults().expand();
         for (int i = 12; i > 0; i--) {
             final Image image;
+//            TextureRegionDrawable textureRegionDrawable;
             switch (i) {
                 case 12:
                 case 9:
                 case 7:
                 case 5:
                 case 3:
+//                    textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(lad));
                     image = new Image(lad);
                     break;
                 case 2:
@@ -69,15 +78,26 @@ public class MyGdxGame extends ApplicationAdapter {
                 case 8:
                 case 10:
                 case 11:
+//                    textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(pattern));
                     image = new Image(pattern);
                     break;
                 case 1:
+//                    textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(right));
                     image = new Image(right);
                     break;
                 default:
+//                    textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(pattern));
                     image = new Image(pattern);
             }
             scrollWidth += image.getWidth();
+//            Table table1 = new Table();
+//            table1.setDebug(true);
+//            table1.center();
+//            table1.setBackground(textureRegionDrawable);
+//            for (int j = 0; j < 6; j++) {
+//                table1.add(circleImg);
+//                table1.row();
+//            }
             table.add(image);
         }
         Gdx.app.log(TAG, "TOTAL WIDTH;" + scrollWidth);
@@ -125,6 +145,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                judgePinAndXian(x, y, pointer);
                 return true;
             }
         });
@@ -146,17 +167,18 @@ public class MyGdxGame extends ApplicationAdapter {
 
     private void judgePinAndXian(float x, float y, int pointer) {
         int chords = chords(y / singleHeight);
+        int pin = 13;
 //        Gdx.app.log(TAG, "CHORDS:" + chords);
         float leftWidth = leftImg.getWidth();
 
         //1.判断 左侧区域 ：两种情况  ： 1） 该弦上没有手指按下 2） 有手指按下
         if (x <= leftWidth) {
-            int pin = 0;
+            pin = 13;
         } else {
             float v = x + sliderValue - leftWidth;
-            int v1 = (int) Math.ceil(v / 130);
-            Gdx.app.log(TAG, "v1:" + v1);
+            pin = (int) Math.ceil(v / 130);
         }
+        Gdx.app.log(TAG, "string and pin :" + chords + "____" + pin);
     }
 
     private int chords(float v) {
