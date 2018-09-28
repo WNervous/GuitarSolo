@@ -95,14 +95,12 @@ public class MyGdxGame extends ApplicationAdapter {
         table.defaults().expand();
         for (int i = 12; i > 0; i--) {
             final Image image;
-//            TextureRegionDrawable textureRegionDrawable;
             switch (i) {
                 case 12:
                 case 9:
                 case 7:
                 case 5:
                 case 3:
-//                    textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(lad));
                     image = new Image(lad);
                     break;
                 case 2:
@@ -111,29 +109,17 @@ public class MyGdxGame extends ApplicationAdapter {
                 case 8:
                 case 10:
                 case 11:
-//                    textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(pattern));
                     image = new Image(pattern);
                     break;
                 case 1:
-//                    textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(right));
                     image = new Image(right);
                     break;
                 default:
-//                    textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(pattern));
                     image = new Image(pattern);
             }
             scrollWidth += image.getWidth();
-//            Table table1 = new Table();
-//            table1.setDebug(true);
-//            table1.center();
-//            table1.setBackground(textureRegionDrawable);
-//            for (int j = 0; j < 6; j++) {
-//                table1.add(circleImg);
-//                table1.row();
-//            }
             table.add(image);
         }
-        Gdx.app.log(TAG, "TOTAL WIDTH;" + scrollWidth);
         new Group().addActor(scroll);
         container.add(scroll).fill().expand();
 
@@ -250,11 +236,10 @@ public class MyGdxGame extends ApplicationAdapter {
                         }
                         Gdx.app.log(TAG, "put");
                     }
-                    diao(string, pin, isLeft);
-                    Gdx.app.log(TAG, "String : " + string + "  pin : " + pin);
+//                    positionAnimal(string, pin, isLeft);
                 }
             } else if (touchUp && actor.getGuitarRect().isContainer(x, y)) {
-//                circleAnimationCreate.reset();
+                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (actor.getPin() == 0) {
                     return;
@@ -264,7 +249,7 @@ public class MyGdxGame extends ApplicationAdapter {
                     Gdx.app.log(TAG, "REMOVE");
                 }
             } else if (touchUp && !actor.getGuitarRect().isContainer(x, y)) {
-//                circleAnimationCreate.reset();
+                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (stringMap.containsKey(actor.getString())) {
                     stringMap.remove(actor.getString());
@@ -274,9 +259,7 @@ public class MyGdxGame extends ApplicationAdapter {
         }
     }
 
-    ArrayList<CircleGroup> circleGroups = new ArrayList<>();
-
-    private void diao(int string, int pin, boolean isLeft) {
+    private void positionAnimal(int string, int pin, boolean isLeft) {
         String s = diaoSet[string - 1][pin];
         Texture texture;
         //先创建 对应类型的动画 ：
@@ -310,6 +293,9 @@ public class MyGdxGame extends ApplicationAdapter {
             default:
                 texture = diaoD;
         }
+//        circleAnimationCreate.reset();
+        Gdx.app.log(TAG, "stagesize 1:" + stage.getActors().size);
+
         circleAnimationCreate.setData(texture, s);
         //获取CircleGroup
         CircleGroup circleGroup = circleAnimationCreate.obtain();
@@ -320,7 +306,6 @@ public class MyGdxGame extends ApplicationAdapter {
             circleGroup.setPosition(225 + (12 - pin) * 130 - sliderValue + 130 / 2, position[string - 1] * 0.592f);
         }
         stage.addActor(circleGroup);
-        Gdx.app.log(TAG, "CircleGroup");
-        Gdx.app.log(TAG, s + "string:" + string + "__" + pin);
+        Gdx.app.log(TAG, "stagesize 2:" + stage.getActors().size);
     }
 }

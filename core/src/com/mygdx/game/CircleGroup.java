@@ -66,12 +66,15 @@ public class CircleGroup extends Group {
         addActor(label);
     }
 
-    private void clearActor() {
+    public void clearActor() {
         for (int i = 0; i < mImages.size; i++) {
             Image image = mImages.get(i);
             image.remove();
         }
         mImages.clear();
+        if (label != null) {
+            label.clear();
+        }
     }
 
     private Action getScaleActionForIndex(int index) {
@@ -90,6 +93,9 @@ public class CircleGroup extends Group {
                 @Override
                 public void run() {
                     isFinish = true;
+                    if (listener!=null){
+                        listener.animalEnd();
+                    }
                     Gdx.app.log("CircleGroup", "Finish");
                 }
             })));
@@ -103,5 +109,15 @@ public class CircleGroup extends Group {
 
     public void setFinish(boolean finish) {
         isFinish = finish;
+    }
+
+    public AnimalEndListener listener;
+
+    public void setListener(AnimalEndListener listener) {
+        this.listener = listener;
+    }
+
+    public interface AnimalEndListener {
+        void animalEnd();
     }
 }
