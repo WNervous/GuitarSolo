@@ -39,7 +39,7 @@ public class CircleGroup extends Group {
         setSize(132, 132);
     }
 
-    private void startAnimator() {
+    public void startAnimator() {
         initActors();
         isFinish = false;
         DelayAction alpha = Actions.delay(0.4f, Actions.alpha(0, 0.3f));
@@ -67,11 +67,12 @@ public class CircleGroup extends Group {
         BitmapFont font = new BitmapFont(Gdx.files.internal("san_caption.fnt"), new TextureRegion(new Texture(Gdx.files.internal("san_caption.png"))));
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         label = new Label(mString, labelStyle);
-        label.setPosition(132 - label.getWidth() / 2, 132 - label.getHeight() / 2);
+        label.setSize(132, 132);
+        label.setAlignment(Align.center);
+//        label.setPosition(132 - label.getWidth() / 2, 132 - label.getHeight() / 2);
         label.setOrigin(Align.center);
         for (int i = 0; i < 4; i++) {
             Image image = new Image(circleTexture);
-            image.setPosition(132 / 2, 132 / 2);
             image.setOrigin(Align.center);
             image.setScale(0f);
             addActor(image);
