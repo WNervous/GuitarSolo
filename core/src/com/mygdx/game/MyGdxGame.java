@@ -34,25 +34,46 @@ public class MyGdxGame extends ApplicationAdapter {
     private int singleWidth;
     private Image circleImg;
 
-    private CircleGroup circleGroup;
+    private boolean isLeft;
 
     private ArrayList<StringRect> stringRects = new ArrayList<>();
     private HashMap<Integer, Integer> stringMap = new HashMap<>();
 
+    private String[] diao1 = {"E", "F", "#F", "G", "#G", "A", "#A", "B", "C", "#C", "D", "#D", "E"};
+    private String[] diao2 = {"A", "#A", "B", "C", "#C", "D", "#D", "E", "F", "#F", "G", "#G", "A"};
+    private String[] diao3 = {"D", "#D", "E", "F", "#F", "G", "#G", "A", "#A", "B", "C", "#C", "D"};
+    private String[] diao4 = {"G", "#G", "A", "#A", "B", "C", "#C", "D", "#D", "E", "F", "#F", "G"};
+    private String[] diao5 = {"B", "C", "#C", "D", "#D", "E", "F", "#F", "G", "#G", "A", "#A", "B"};
+    private String[] diao6 = {"E", "F", "#F", "G", "#G", "A", "#A", "B", "C", "#C", "D", "#D", "E"};
+    private String[][] diaoSet = {diao1, diao2, diao3, diao4, diao5, diao6};
+
+    private Texture diaoA;
+    private Texture diaoB;
+    private Texture diaoC;
+    private Texture diaoD;
+    private Texture diaoE;
+    private Texture diaoF;
+    private Texture diaoG;
+
+    private CircleAnimationCreate circleAnimationCreate;
+
     @Override
     public void create() {
         stage = new Stage(new FitViewport(SW, SH));
-        circleGroup = new CircleGroup();
+        circleAnimationCreate = new CircleAnimationCreate();
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
         Texture lad = new Texture(Gdx.files.internal("solo/lab.png"));
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
         Texture right = new Texture(Gdx.files.internal("solo/right.png"));
         final Texture left = new Texture(Gdx.files.internal("solo/left.png"));
 
-        // circle
-        Texture cicleTexture = new Texture(Gdx.files.internal("solo/ic_oval.png"));
-        circleImg = new Image(cicleTexture);
-        circleImg.setSize(100, 100);
+        diaoA = new Texture(Gdx.files.internal("solo/circle/ic_a.png"));
+        diaoB = new Texture(Gdx.files.internal("solo/circle/ic_b.png"));
+        diaoC = new Texture(Gdx.files.internal("solo/circle/ic_c.png"));
+        diaoD = new Texture(Gdx.files.internal("solo/circle/ic_d.png"));
+        diaoE = new Texture(Gdx.files.internal("solo/circle/ic_e.png"));
+        diaoF = new Texture(Gdx.files.internal("solo/circle/ic_f.png"));
+        diaoG = new Texture(Gdx.files.internal("solo/circle/ic_g.png"));
 
         Image bgimg = new Image(solobg);
         leftImg = new Image(left);
@@ -134,7 +155,6 @@ public class MyGdxGame extends ApplicationAdapter {
 //        slider.setValue(max);
         //添加slider
         stage.addActor(slider);
-        stage.addActor(circleGroup);
         container.addListener(new InputListener() {
 
             @Override
@@ -154,6 +174,21 @@ public class MyGdxGame extends ApplicationAdapter {
             }
         });
         initStringRect();
+    }
+
+    @Override
+    public void render() {
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        scrollWidth = 0;
+        isLeft = false;
     }
 
     private void initStringRect() {
@@ -182,22 +217,8 @@ public class MyGdxGame extends ApplicationAdapter {
         }
     }
 
-    @Override
-    public void render() {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
-        stage.draw();
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-        scrollWidth = 0;
-    }
-
     private void judgePinAndXian(float x, float y, boolean touchUp, int pointer) {
-        if (x > leftImg.getWidth()) {
+        if (x > 225) {
             x = x + sliderValue;
         }
         for (StringRect actor : stringRects) {
@@ -212,8 +233,11 @@ public class MyGdxGame extends ApplicationAdapter {
                                 Integer pin1 = stringMap.get(string1);
                                 if (pin1 > 0) {
                                     pin = pin1;
+                                    isLeft = true;
                                     break;
                                 }
+                            } else {
+                                isLeft = false;
                             }
                         }
                     } else {
@@ -224,6 +248,7 @@ public class MyGdxGame extends ApplicationAdapter {
                         }
                         Gdx.app.log(TAG, "put");
                     }
+                    diao(string, pin, isLeft);
                     Gdx.app.log(TAG, "String : " + string + "  pin : " + pin);
                 }
             } else if (touchUp && actor.getGuitarRect().isContainer(x, y)) {
@@ -243,5 +268,56 @@ public class MyGdxGame extends ApplicationAdapter {
                 }
             }
         }
+    }
+
+    ArrayList<CircleGroup> circleGroups = new ArrayList<>();
+
+    private void diao(int string, int pin, boolean isLeft) {
+        String s = diaoSet[string - 1][pin];
+        Texture texture;
+        //先创建 对应类型的动画 ：
+        switch (s) {
+            case "A":
+            case "#A":
+                texture = diaoA;
+                break;
+            case "B":
+                texture = diaoB;
+                break;
+            case "C":
+            case "#C":
+                texture = diaoC;
+                break;
+            case "D":
+            case "#D":
+                texture = diaoD;
+                break;
+            case "E":
+                texture = diaoE;
+                break;
+            case "F":
+            case "#F":
+                texture = diaoF;
+                break;
+            case "G":
+            case "#G":
+                texture = diaoG;
+                break;
+            default:
+                texture = diaoD;
+        }
+        circleAnimationCreate.reset();
+        circleAnimationCreate.setData(texture, s);
+        //获取CircleGroup
+        CircleGroup circleGroup = circleAnimationCreate.obtain();
+        // 确定位置
+        if (isLeft) {
+            circleGroup.setPosition(leftImg.getWidth() / 2, string * singleHeight);
+        } else {
+            circleGroup.setPosition(leftImg.getWidth() / 2, string * singleHeight);
+        }
+        stage.addActor(circleGroup);
+        Gdx.app.log(TAG, "CircleGroup");
+        Gdx.app.log(TAG, s + "string:" + string + "__" + pin);
     }
 }
