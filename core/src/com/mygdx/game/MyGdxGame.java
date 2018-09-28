@@ -39,6 +39,8 @@ public class MyGdxGame extends ApplicationAdapter {
     private ArrayList<StringRect> stringRects = new ArrayList<>();
     private HashMap<Integer, Integer> stringMap = new HashMap<>();
 
+    private int[] position = {139, 298, 456, 615, 772, 932};
+
     private String[] diao1 = {"E", "F", "#F", "G", "#G", "A", "#A", "B", "C", "#C", "D", "#D", "E"};
     private String[] diao2 = {"A", "#A", "B", "C", "#C", "D", "#D", "E", "F", "#F", "G", "#G", "A"};
     private String[] diao3 = {"D", "#D", "E", "F", "#F", "G", "#G", "A", "#A", "B", "C", "#C", "D"};
@@ -252,6 +254,7 @@ public class MyGdxGame extends ApplicationAdapter {
                     Gdx.app.log(TAG, "String : " + string + "  pin : " + pin);
                 }
             } else if (touchUp && actor.getGuitarRect().isContainer(x, y)) {
+                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (actor.getPin() == 0) {
                     return;
@@ -261,6 +264,7 @@ public class MyGdxGame extends ApplicationAdapter {
                     Gdx.app.log(TAG, "REMOVE");
                 }
             } else if (touchUp && !actor.getGuitarRect().isContainer(x, y)) {
+                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (stringMap.containsKey(actor.getString())) {
                     stringMap.remove(actor.getString());
@@ -306,15 +310,14 @@ public class MyGdxGame extends ApplicationAdapter {
             default:
                 texture = diaoD;
         }
-        circleAnimationCreate.reset();
         circleAnimationCreate.setData(texture, s);
         //获取CircleGroup
         CircleGroup circleGroup = circleAnimationCreate.obtain();
         // 确定位置
-        if (isLeft) {
-            circleGroup.setPosition(leftImg.getWidth() / 2, string * singleHeight);
+        if (isLeft || pin == 0) {
+            circleGroup.setPosition(225 / 2, position[string - 1] * 0.592f);
         } else {
-            circleGroup.setPosition(leftImg.getWidth() / 2, string * singleHeight);
+            circleGroup.setPosition(225 + (12 - pin) * 130 - sliderValue + 130 / 2, position[string - 1] * 0.592f);
         }
         stage.addActor(circleGroup);
         Gdx.app.log(TAG, "CircleGroup");

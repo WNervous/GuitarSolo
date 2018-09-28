@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CircleAnimationCreate {
 
@@ -38,11 +39,13 @@ public class CircleAnimationCreate {
     }
 
     public void reset() {
-        for (CircleGroup circleGroup : circleGroups) {
+        Iterator<CircleGroup> iterator = circleGroups.iterator();
+        while (iterator.hasNext()) {
+            CircleGroup circleGroup = iterator.next();
             if (circleGroup.isFinish()) {
                 circleGroup.setFinish(false);
                 circleGroupPool.free(circleGroup);
-                circleGroups.remove(circleGroup);
+                iterator.remove();
             }
         }
     }
