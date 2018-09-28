@@ -25,21 +25,11 @@ public class CircleGroup extends Group {
     private String mString;
     private boolean isFinish;
 
-    public CircleGroup() {
-//        circleTexture = texture;
-//        mString = s;
-//        startAnimator();
+    CircleGroup() {
         setSize(132, 132);
     }
 
-    public CircleGroup(Texture circleTexture, String s) {
-        this.circleTexture = circleTexture;
-        this.mString = s;
-        startAnimator();
-        setSize(132, 132);
-    }
-
-    public void startAnimator() {
+    private void startAnimator() {
         initActors();
         isFinish = false;
         DelayAction alpha = Actions.delay(0.4f, Actions.alpha(0, 0.3f));
@@ -88,6 +78,7 @@ public class CircleGroup extends Group {
         }
         mImages.clear();
         if (label != null) {
+            label.remove();
             label.clear();
         }
     }
@@ -96,7 +87,6 @@ public class CircleGroup extends Group {
         clearActor();
         circleTexture = null;
         mString = null;
-        setPosition(0, 0);
     }
 
     private Action getScaleActionForIndex(int index) {

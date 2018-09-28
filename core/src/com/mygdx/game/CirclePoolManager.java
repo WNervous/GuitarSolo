@@ -13,129 +13,8 @@ public class CirclePoolManager {
     private String s;
     private Stage stage;
 
-    public CirclePoolManager(Stage stage) {
+    CirclePoolManager(Stage stage) {
         this.stage = stage;
-    }
-
-    private final Pool<CircleGroup> circleGroupPoolA = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "A");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolB = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "B");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolC = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "C");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolD = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "D");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolE = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "E");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolF = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "F");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolG = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "G");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolAPlus = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "#A");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolCPlus = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "#C");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolDPlus = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "#D");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolFPlus = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "#F");
-        }
-    };
-    private final Pool<CircleGroup> circleGroupPoolGPlus = new Pool<CircleGroup>() {
-        @Override
-        protected CircleGroup newObject() {
-            return new CircleGroup(texture, "#G");
-        }
-    };
-
-    public Pool<CircleGroup> getCircleGroupPoolA() {
-        return circleGroupPoolA;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolB() {
-        return circleGroupPoolB;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolC() {
-        return circleGroupPoolC;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolD() {
-        return circleGroupPoolD;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolE() {
-        return circleGroupPoolE;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolF() {
-        return circleGroupPoolF;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolG() {
-        return circleGroupPoolG;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolAPlus() {
-        return circleGroupPoolAPlus;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolCPlus() {
-        return circleGroupPoolCPlus;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolDPlus() {
-        return circleGroupPoolDPlus;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolFPlus() {
-        return circleGroupPoolFPlus;
-    }
-
-    public Pool<CircleGroup> getCircleGroupPoolGPlus() {
-        return circleGroupPoolGPlus;
     }
 
     private final Pool<CircleGroup> circleGroupPool = new Pool<CircleGroup>() {
@@ -143,11 +22,6 @@ public class CirclePoolManager {
         protected CircleGroup newObject() {
             return new CircleGroup();
         }
-
-//        @Override
-//        protected void reset(CircleGroup object) {
-//            object.clearData();
-//        }
     };
 
     public String getS() {
@@ -164,26 +38,6 @@ public class CirclePoolManager {
     }
 
     public CircleGroup obtain() {
-        int free = circleGroupPool.getFree();
-        LogUtil.log("circleGroupPool", "" + free);
-        final CircleGroup obtain = circleGroupPool.obtain();
-        obtain.setData(texture, s);
-        obtain.setListener(new CircleGroup.AnimalEndListener() {
-            @Override
-            public void animalEnd() {
-                circleGroupPool.free(obtain);
-                Array<Actor> actors = stage.getActors();
-                for (Actor actor : actors) {
-                    if (actor instanceof CircleGroup && ((CircleGroup) actor).isFinish()) {
-                        actor.addAction(Actions.removeActor());
-                    }
-                }
-            }
-        });
-        return obtain;
-    }
-
-    public CircleGroup obtain(final Pool<CircleGroup> circleGroupPool) {
         int free = circleGroupPool.getFree();
         LogUtil.log("circleGroupPool", "" + free);
         final CircleGroup obtain = circleGroupPool.obtain();

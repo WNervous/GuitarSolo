@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
@@ -253,13 +252,11 @@ public class MyGdxGame extends ApplicationAdapter {
                 }
                 if (stringMap.containsKey(actor.getString())) {
                     stringMap.remove(actor.getString());
-                    Gdx.app.log(TAG, "REMOVE");
                 }
             } else if (touchUp && !actor.getGuitarRect().isContainer(x, y)) {
                 actor.setMoveBefore(false, pointer);
                 if (stringMap.containsKey(actor.getString())) {
                     stringMap.remove(actor.getString());
-                    Gdx.app.log(TAG, "REMOVE");
                 }
             }
         }
@@ -268,56 +265,35 @@ public class MyGdxGame extends ApplicationAdapter {
     private void positionAnimal(int string, int pin, boolean isLeft) {
         String s = diaoSet[string - 1][pin];
         Texture texture;
-        Pool<CircleGroup> circleGroupPool;
         //先创建 对应类型的动画 ：
         switch (s) {
             case "A":
-                texture = diaoA;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolA();
-                break;
             case "#A":
                 texture = diaoA;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolAPlus();
                 break;
             case "B":
                 texture = diaoB;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolB();
                 break;
             case "C":
-                texture = diaoC;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolC();
-                break;
             case "#C":
                 texture = diaoC;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolCPlus();
                 break;
             case "D":
-                texture = diaoD;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolD();
             case "#D":
                 texture = diaoD;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolDPlus();
                 break;
             case "E":
                 texture = diaoE;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolE();
                 break;
             case "F":
-                texture = diaoF;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolF();
             case "#F":
                 texture = diaoF;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolFPlus();
                 break;
             case "G":
-                texture = diaoG;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolG();
             case "#G":
                 texture = diaoG;
-                circleGroupPool = circlePoolManager.getCircleGroupPoolGPlus();
                 break;
             default:
-                circleGroupPool = circlePoolManager.getCircleGroupPoolGPlus();
                 texture = diaoD;
         }
 
@@ -326,19 +302,10 @@ public class MyGdxGame extends ApplicationAdapter {
         CircleGroup circleGroup = circlePoolManager.obtain();
         // 确定位置
         if (isLeft || pin == 0) {
-            circleGroup.setPosition(leftImg.getWidth() / 2 - circleGroup.getWidth() / 2, position[string - 1] * 0.592f - circleGroup.getWidth() / 2);
+            circleGroup.setPosition(225 / 2 - 132 / 2, position[string - 1] * 0.592f - 132 / 2);
         } else {
-            circleGroup.setPosition(leftImg.getWidth() + (12 - pin) * pattern.getWidth() - sliderValue + pattern.getWidth() / 2 - circleGroup.getWidth() / 2, position[string - 1] * 0.592f - 132 / 2);
+            circleGroup.setPosition(225 + (12 - pin) * 130 - sliderValue + 130 / 2 - 132 / 2, position[string - 1] * 0.592f - 132 / 2);
         }
-        circleGroup.setSize(132, 132);
         stage.addActor(circleGroup);
-        circleGroup.startAnimator();
-
-
-//        Image image = new Image(texture);
-//        image.setSize(132, 132);
-//        image.setPosition(circleGroup.getX(), circleGroup.getY());
-//        stage.addActor(image);
-        LogUtil.log(TAG, "postion  X : " + circleGroup.getWidth() + "_Y:" + circleGroup.getHeight());
     }
 }
