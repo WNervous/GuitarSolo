@@ -7,13 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
-public class CircleAnimationPool {
+public class CirclePoolManager {
 
     private Texture texture;
     private String s;
     private Stage stage;
 
-    public CircleAnimationPool(Stage stage) {
+    public CirclePoolManager(Stage stage) {
         this.stage = stage;
     }
 
@@ -116,6 +116,26 @@ public class CircleAnimationPool {
     }
 
     public CircleGroup obtain() {
+        int free = circleGroupPool.getFree();
+        LogUtil.log("circleGroupPool", "" + free);
+        final CircleGroup obtain = circleGroupPool.obtain();
+        obtain.setData(texture, s);
+        obtain.setListener(new CircleGroup.AnimalEndListener() {
+            @Override
+            public void animalEnd() {
+                circleGroupPool.free(obtain);
+                Array<Actor> actors = stage.getActors();
+                for (Actor actor : actors) {
+                    if (actor instanceof CircleGroup && ((CircleGroup) actor).isFinish()) {
+                        actor.addAction(Actions.removeActor());
+                    }
+                }
+            }
+        });
+        return obtain;
+    }
+
+    public CircleGroup obtain(final Pool<CircleGroup> circleGroupPool) {
         int free = circleGroupPool.getFree();
         LogUtil.log("circleGroupPool", "" + free);
         final CircleGroup obtain = circleGroupPool.obtain();

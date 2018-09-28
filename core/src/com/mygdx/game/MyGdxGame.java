@@ -60,12 +60,12 @@ public class MyGdxGame extends ApplicationAdapter {
     private Texture diaoF;
     private Texture diaoG;
 
-    private CircleAnimationPool circleAnimationPool;
+    private CirclePoolManager circlePoolManager;
 
     @Override
     public void create() {
         stage = new Stage(new FitViewport(SW, SH));
-        circleAnimationPool = new CircleAnimationPool(stage);
+        circlePoolManager = new CirclePoolManager(stage);
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
         Texture lad = new Texture(Gdx.files.internal("solo/lab.png"));
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
@@ -178,7 +178,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        circleAnimationPool.dispose();
+        circlePoolManager.dispose();
         stage.dispose();
         scrollWidth = 0;
         isLeft = false;
@@ -298,16 +298,17 @@ public class MyGdxGame extends ApplicationAdapter {
                 texture = diaoD;
         }
 
-        circleAnimationPool.setData(texture, s);
+        circlePoolManager.setData(texture, s);
         //获取CircleGroup
-        CircleGroup circleGroup = circleAnimationPool.obtain();
+        CircleGroup circleGroup = circlePoolManager.obtain();
         // 确定位置
         if (isLeft || pin == 0) {
             circleGroup.setPosition(225 / 2, position[string - 1] * 0.592f);
         } else {
             circleGroup.setPosition(225 + (12 - pin) * 130 - sliderValue + 130 / 2, position[string - 1] * 0.592f);
         }
+
         stage.addActor(circleGroup);
-        LogUtil.log(TAG, "STAR Animal");
+        LogUtil.log(TAG, "postion  X : " + circleGroup.getX() + "_Y:" + circleGroup.getY());
     }
 }

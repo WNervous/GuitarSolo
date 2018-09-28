@@ -67,11 +67,11 @@ public class CircleGroup extends Group {
         BitmapFont font = new BitmapFont(Gdx.files.internal("san_caption.fnt"), new TextureRegion(new Texture(Gdx.files.internal("san_caption.png"))));
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         label = new Label(mString, labelStyle);
-        label.setPosition(getWidth() - label.getWidth() / 2, getHeight() - label.getHeight() / 2);
+        label.setPosition(132 - label.getWidth() / 2, 132 - label.getHeight() / 2);
         label.setOrigin(Align.center);
         for (int i = 0; i < 4; i++) {
             Image image = new Image(circleTexture);
-            image.setPosition(getWidth() - image.getWidth() / 2, getHeight() - image.getHeight() / 2);
+            image.setPosition(132 / 2, 132 / 2);
             image.setOrigin(Align.center);
             image.setScale(0f);
             addActor(image);
