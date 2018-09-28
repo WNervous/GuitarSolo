@@ -60,12 +60,12 @@ public class MyGdxGame extends ApplicationAdapter {
     private Texture diaoF;
     private Texture diaoG;
 
-    private CircleAnimationCreate circleAnimationCreate;
+    private CircleAnimationPool circleAnimationPool;
 
     @Override
     public void create() {
         stage = new Stage(new FitViewport(SW, SH));
-        circleAnimationCreate = new CircleAnimationCreate(stage);
+        circleAnimationPool = new CircleAnimationPool(stage);
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
         Texture lad = new Texture(Gdx.files.internal("solo/lab.png"));
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
@@ -178,6 +178,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void dispose() {
+        circleAnimationPool.dispose();
         stage.dispose();
         scrollWidth = 0;
         isLeft = false;
@@ -227,6 +228,8 @@ public class MyGdxGame extends ApplicationAdapter {
                                     pin = pin1;
                                     isLeft = true;
                                     break;
+                                } else {
+                                    isLeft = false;
                                 }
                             } else {
                                 isLeft = false;
@@ -238,12 +241,10 @@ public class MyGdxGame extends ApplicationAdapter {
                         } else {
                             stringMap.put(string, pin);
                         }
-                        Gdx.app.log(TAG, "put");
                     }
                     positionAnimal(string, pin, isLeft);
                 }
             } else if (touchUp && actor.getGuitarRect().isContainer(x, y)) {
-//                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (actor.getPin() == 0) {
                     return;
@@ -253,7 +254,6 @@ public class MyGdxGame extends ApplicationAdapter {
                     Gdx.app.log(TAG, "REMOVE");
                 }
             } else if (touchUp && !actor.getGuitarRect().isContainer(x, y)) {
-//                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (stringMap.containsKey(actor.getString())) {
                     stringMap.remove(actor.getString());
@@ -298,9 +298,9 @@ public class MyGdxGame extends ApplicationAdapter {
                 texture = diaoD;
         }
 
-        circleAnimationCreate.setData(texture, s);
+        circleAnimationPool.setData(texture, s);
         //获取CircleGroup
-        CircleGroup circleGroup = circleAnimationCreate.obtain();
+        CircleGroup circleGroup = circleAnimationPool.obtain();
         // 确定位置
         if (isLeft || pin == 0) {
             circleGroup.setPosition(225 / 2, position[string - 1] * 0.592f);
@@ -308,5 +308,6 @@ public class MyGdxGame extends ApplicationAdapter {
             circleGroup.setPosition(225 + (12 - pin) * 130 - sliderValue + 130 / 2, position[string - 1] * 0.592f);
         }
         stage.addActor(circleGroup);
+        LogUtil.log(TAG, "STAR Animal");
     }
 }
