@@ -71,6 +71,9 @@ public class MyGdxGame extends ApplicationAdapter {
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
         Texture right = new Texture(Gdx.files.internal("solo/right.png"));
         final Texture left = new Texture(Gdx.files.internal("solo/left.png"));
+        Texture background = new Texture(Gdx.files.internal("solo/slider_bg.png"));
+        Texture knob = new Texture(Gdx.files.internal("solo/slider_knob.png"));
+
 
         diaoA = new Texture(Gdx.files.internal("solo/circle/ic_a.png"));
         diaoB = new Texture(Gdx.files.internal("solo/circle/ic_b.png"));
@@ -120,7 +123,7 @@ public class MyGdxGame extends ApplicationAdapter {
                 default:
                     image = new Image(pattern);
             }
-            scrollWidth += image.getWidth();
+            scrollWidth += 130;
             table.add(image);
         }
         new Group().addActor(scroll);
@@ -128,8 +131,6 @@ public class MyGdxGame extends ApplicationAdapter {
 
         //slider  设置
         final Slider.SliderStyle sliderStyle = new Slider.SliderStyle();
-        Texture background = new Texture(Gdx.files.internal("solo/slider_bg.png"));
-        Texture knob = new Texture(Gdx.files.internal("solo/slider_knob.png"));
         sliderStyle.background = new TextureRegionDrawable(new TextureRegion(background));
         sliderStyle.knob = new TextureRegionDrawable(new TextureRegion(knob));
         int max = scrollWidth - SW + left.getWidth();
