@@ -93,7 +93,7 @@ public class CircleGroup extends Group {
                 @Override
                 public void run() {
                     isFinish = true;
-                    if (listener!=null){
+                    if (listener != null) {
                         listener.animalEnd();
                     }
                     Gdx.app.log("CircleGroup", "Finish");

@@ -31,8 +31,6 @@ public class MyGdxGame extends ApplicationAdapter {
     private float sliderValue;
     private int scrollWidth;
     private int singleHeight = SH / 7;
-    private int singleWidth;
-    private Image circleImg;
 
     private boolean isLeft;
 
@@ -62,7 +60,7 @@ public class MyGdxGame extends ApplicationAdapter {
     @Override
     public void create() {
         stage = new Stage(new FitViewport(SW, SH));
-        circleAnimationCreate = new CircleAnimationCreate();
+        circleAnimationCreate = new CircleAnimationCreate(stage);
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
         Texture lad = new Texture(Gdx.files.internal("solo/lab.png"));
         Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
@@ -236,10 +234,10 @@ public class MyGdxGame extends ApplicationAdapter {
                         }
                         Gdx.app.log(TAG, "put");
                     }
-//                    positionAnimal(string, pin, isLeft);
+                    positionAnimal(string, pin, isLeft);
                 }
             } else if (touchUp && actor.getGuitarRect().isContainer(x, y)) {
-                circleAnimationCreate.reset();
+//                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (actor.getPin() == 0) {
                     return;
@@ -249,7 +247,7 @@ public class MyGdxGame extends ApplicationAdapter {
                     Gdx.app.log(TAG, "REMOVE");
                 }
             } else if (touchUp && !actor.getGuitarRect().isContainer(x, y)) {
-                circleAnimationCreate.reset();
+//                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (stringMap.containsKey(actor.getString())) {
                     stringMap.remove(actor.getString());
@@ -293,8 +291,6 @@ public class MyGdxGame extends ApplicationAdapter {
             default:
                 texture = diaoD;
         }
-//        circleAnimationCreate.reset();
-        Gdx.app.log(TAG, "stagesize 1:" + stage.getActors().size);
 
         circleAnimationCreate.setData(texture, s);
         //获取CircleGroup
@@ -306,6 +302,5 @@ public class MyGdxGame extends ApplicationAdapter {
             circleGroup.setPosition(225 + (12 - pin) * 130 - sliderValue + 130 / 2, position[string - 1] * 0.592f);
         }
         stage.addActor(circleGroup);
-        Gdx.app.log(TAG, "stagesize 2:" + stage.getActors().size);
     }
 }
