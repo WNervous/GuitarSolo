@@ -29,6 +29,31 @@ public class CircleGroup extends Group {
         setSize(132, 132);
     }
 
+    public void setData(Texture circleTexture, String s) {
+        this.circleTexture = circleTexture;
+        this.mString = s;
+        startAnimator();
+        setSize(132, 132);
+    }
+
+    private void initActors() {
+        clearActor();
+        BitmapFont font = new BitmapFont(Gdx.files.internal("san_caption.fnt"), new TextureRegion(new Texture(Gdx.files.internal("san_caption.png"))));
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
+        label = new Label(mString, labelStyle);
+        label.setSize(132, 132);
+        label.setAlignment(Align.center);
+        label.setOrigin(Align.center);
+        for (int i = 0; i < 4; i++) {
+            Image image = new Image(circleTexture);
+            image.setOrigin(Align.center);
+            image.setScale(0f);
+            addActor(image);
+            mImages.add(image);
+        }
+        addActor(label);
+    }
+
     private void startAnimator() {
         initActors();
         isFinish = false;
@@ -45,33 +70,8 @@ public class CircleGroup extends Group {
         }
     }
 
-    public void setData(Texture circleTexture, String s) {
-        this.circleTexture = circleTexture;
-        this.mString = s;
-        startAnimator();
-        setSize(132, 132);
-    }
 
-    private void initActors() {
-        clearActor();
-        BitmapFont font = new BitmapFont(Gdx.files.internal("san_caption.fnt"), new TextureRegion(new Texture(Gdx.files.internal("san_caption.png"))));
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
-        label = new Label(mString, labelStyle);
-        label.setSize(132, 132);
-        label.setAlignment(Align.center);
-//        label.setPosition(132 - label.getWidth() / 2, 132 - label.getHeight() / 2);
-        label.setOrigin(Align.center);
-        for (int i = 0; i < 4; i++) {
-            Image image = new Image(circleTexture);
-            image.setOrigin(Align.center);
-            image.setScale(0f);
-            addActor(image);
-            mImages.add(image);
-        }
-        addActor(label);
-    }
-
-    public void clearActor() {
+    private void clearActor() {
         for (int i = 0; i < mImages.size; i++) {
             Image image = mImages.get(i);
             image.remove();

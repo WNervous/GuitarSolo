@@ -61,7 +61,6 @@ public class MyGdxGame extends ApplicationAdapter {
     private Texture diaoG;
 
     private CirclePoolManager circlePoolManager;
-    Texture pattern;
 
     @Override
     public void create() {
@@ -69,7 +68,7 @@ public class MyGdxGame extends ApplicationAdapter {
         circlePoolManager = new CirclePoolManager(stage);
         Texture solobg = new Texture(Gdx.files.internal("solo/bg.jpg"));
         Texture lad = new Texture(Gdx.files.internal("solo/lab.png"));
-        pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
+        Texture pattern = new Texture(Gdx.files.internal("solo/pattern.png"));
         Texture right = new Texture(Gdx.files.internal("solo/right.png"));
         final Texture left = new Texture(Gdx.files.internal("solo/left.png"));
         Texture background = new Texture(Gdx.files.internal("solo/slider_bg.png"));
