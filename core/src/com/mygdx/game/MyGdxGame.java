@@ -254,7 +254,7 @@ public class MyGdxGame extends ApplicationAdapter {
                     Gdx.app.log(TAG, "String : " + string + "  pin : " + pin);
                 }
             } else if (touchUp && actor.getGuitarRect().isContainer(x, y)) {
-                circleAnimationCreate.reset();
+//                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (actor.getPin() == 0) {
                     return;
@@ -264,7 +264,7 @@ public class MyGdxGame extends ApplicationAdapter {
                     Gdx.app.log(TAG, "REMOVE");
                 }
             } else if (touchUp && !actor.getGuitarRect().isContainer(x, y)) {
-                circleAnimationCreate.reset();
+//                circleAnimationCreate.reset();
                 actor.setMoveBefore(false, pointer);
                 if (stringMap.containsKey(actor.getString())) {
                     stringMap.remove(actor.getString());

@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Pool;
 
@@ -35,6 +36,7 @@ public class CircleAnimationCreate {
     public CircleGroup obtain() {
         CircleGroup obtain = circleGroupPool.obtain();
         circleGroups.add(obtain);
+        Gdx.app.log("CircleGroup", "CircleGroupSize:" + circleGroups.size());
         return obtain;
     }
 
@@ -46,6 +48,7 @@ public class CircleAnimationCreate {
                 circleGroup.setFinish(false);
                 circleGroupPool.free(circleGroup);
                 iterator.remove();
+                Gdx.app.log("CircleGroup", "CircleGroupSize:" + circleGroups.size());
             }
         }
     }
