@@ -22,14 +22,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyGdxGame extends ApplicationAdapter {
+
+    private String TAG = "MyGdxGame";
+
     public static final int SW = 1136;
     public static final int SH = 640;
-    private String TAG = "MyGdxGame";
+
     private Stage stage;
+
     private Slider slider;
-    private Image leftImg;
     private float sliderValue;
     private int scrollWidth;
+
+    private Image leftImg;
     private int singleHeight = SH / 7;
 
     private boolean isLeft;
@@ -141,7 +146,7 @@ public class MyGdxGame extends ApplicationAdapter {
 //        slider.setValue(max);
         //添加slider
         stage.addActor(slider);
-        container.addListener(new InputListener() {
+        stage.addListener(new InputListener() {
 
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
