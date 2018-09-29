@@ -42,7 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
     private ArrayList<StringRect> stringRects = new ArrayList<>();
     private HashMap<Integer, Integer> stringMap = new HashMap<>();
 
-    private int[] position = {139, 298, 456, 615, 772, 932};
+    private float[] position = {82.2f, 176.4f, 270, 364, 455.4f, 550};
 
     private String[] diao1 = {"E", "F", "#F", "G", "#G", "A", "#A", "B", "C", "#C", "D", "#D", "E"};
     private String[] diao2 = {"A", "#A", "B", "C", "#C", "D", "#D", "E", "F", "#F", "G", "#G", "A"};
@@ -301,9 +301,9 @@ public class MyGdxGame extends ApplicationAdapter {
         CircleGroup circleGroup = circlePoolManager.obtain();
         // 确定位置
         if (isLeft || pin == 0) {
-            circleGroup.setPosition(225 / 2 - 132 / 2, position[string - 1] * 0.592f - 132 / 2);
+            circleGroup.setPosition(225 / 2 - 132 / 2, position[string - 1] - 132 / 2);
         } else {
-            circleGroup.setPosition(225 + (12 - pin) * 130 - sliderValue + 130 / 2 - 132 / 2, position[string - 1] * 0.592f - 132 / 2);
+            circleGroup.setPosition(225 + (12 - pin) * 130 - sliderValue + 130 / 2 - 132 / 2, position[string - 1] - 132 / 2);
         }
         stage.addActor(circleGroup);
     }
