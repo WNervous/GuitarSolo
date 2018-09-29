@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -126,14 +125,14 @@ public class MyGdxGame extends ApplicationAdapter {
             scrollWidth += 130;
             table.add(image);
         }
-        new Group().addActor(scroll);
         container.add(scroll).fill().expand();
 
         //slider  设置
         final Slider.SliderStyle sliderStyle = new Slider.SliderStyle();
         sliderStyle.background = new TextureRegionDrawable(new TextureRegion(background));
         sliderStyle.knob = new TextureRegionDrawable(new TextureRegion(knob));
-        int max = scrollWidth - SW + left.getWidth();
+        final int max = scrollWidth - SW + left.getWidth();
+        scroll.setScrollX(max);
         slider = new Slider(0, max, 1, false, sliderStyle);
         slider.setWidth(background.getWidth());
         slider.setPosition(SW / 2 - background.getWidth() / 2, 0);
